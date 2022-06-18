@@ -18,6 +18,12 @@ public class PlayerControler : MonoBehaviour
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
 
+            // 斜め移動の禁止
+            if (input.x != 0)
+            {
+                input.y = 0;
+            }
+
             // 入力があったら
             if (input != Vector2.zero)
             {
@@ -50,7 +56,7 @@ public class PlayerControler : MonoBehaviour
 
         transform.position = targetPos;
 
-        // 移動中のフラグを下す
+        // 移動中のフラグをおろす
         isMoving = false;
     }
 }
