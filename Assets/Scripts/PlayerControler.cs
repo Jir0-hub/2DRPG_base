@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class PlayerControler : MonoBehaviour
 {
-    // Playerの１マス移動
+    // Playerの移動
     [SerializeField] float moveSpeed;
 
     bool isMoving;
     Vector2 input;
+
+    Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     void Update()
     {
         // 移動中は入力を受け付けたくない
@@ -27,6 +35,9 @@ public class PlayerControler : MonoBehaviour
             // 入力があったら
             if (input != Vector2.zero)
             {
+                // animatorの変数に代入して向きを変える
+                animator.SetFloat("moveX", input.x);
+                animator.SetFloat("moveY", input.y);
                 // 目的地に入力分を追加
                 Vector2 targetPos = transform.position;
                 targetPos.x += input.x;
@@ -35,6 +46,8 @@ public class PlayerControler : MonoBehaviour
                 StartCoroutine(Move(targetPos));
             }
         }
+        // 移動中のフラグで、アニメーションを変更：true→walk
+        animator.SetBool("isMoving", isMoving);
     }
     
     IEnumerator Move(Vector3 targetPos)
