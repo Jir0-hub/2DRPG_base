@@ -5,12 +5,17 @@ using UnityEngine;
 public class PlayerControler : MonoBehaviour
 {
     // Playerの移動
+    // 
+
     [SerializeField] float moveSpeed;
 
     bool isMoving;
     Vector2 input;
 
     Animator animator;
+
+    // 壁判定のレイヤー
+    [SerializeField] LayerMask solidObjects;
 
     private void Awake()
     {
@@ -42,8 +47,13 @@ public class PlayerControler : MonoBehaviour
                 Vector2 targetPos = transform.position;
                 targetPos.x += input.x;
                 targetPos.y += input.y;
-                // コルーチンを使って徐々に目的地に近づける
-                StartCoroutine(Move(targetPos));
+                // 移動可否判定
+                if (IsWalkable(targetPos))
+                {
+                    // コルーチンを使って徐々に目的地に近づける
+                    StartCoroutine(Move(targetPos));
+                }
+                
             }
         }
         // 移動中のフラグで、アニメーションを変更：true→walk
@@ -71,6 +81,13 @@ public class PlayerControler : MonoBehaviour
 
         // 移動中のフラグをおろす
         isMoving = false;
+    }
+
+    // 目的地の移動可否判定
+    bool IsWalkable(Vector2 targetPos)
+    {
+        // 目的地に半径0.2fの円のRayをとはして、solidObjectsにぶつかったらtrue
+        return !Physics2D.OverlapCircle(targetPos, 0.2f, solidObjects);
     }
 }
 
