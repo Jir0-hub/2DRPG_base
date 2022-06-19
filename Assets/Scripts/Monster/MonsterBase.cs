@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,19 +29,38 @@ public class MonsterBase : ScriptableObject
     [SerializeField] int spAttack;
     [SerializeField] int spDefense;
     [SerializeField] int speed;
-    // カプセル化：他ファイルから値の取得はできるが変更はできない
+
+    // 覚える技一覧
+    [SerializeField] List<LearnableMove> learnableMoves;
+    
+
+    // カプセル化：他ファイル（Monster.cs）から参照するためにプロパティを使う
     public int MaxHP { get => maxHP; }
     public int Attack { get => attack; }
     public int Defense { get => defense; }
     public int SpAttack { get => spAttack; }
     public int SpDefense { get => spDefense; }
     public int Speed { get => speed; }
+    public List<LearnableMove> LearnableMoves { get => learnableMoves;}
+}
+
+// 覚える技クラス：どのレベルで何を覚えるか
+[Serializable]
+public class LearnableMove
+{
+    // ヒエラルキーで設定する
+    [SerializeField] MoveBase _base;
+    [SerializeField] int level;
+
+    public MoveBase Base { get => _base; }
+    public int Level { get => level; }
 }
 
 // タイプの定数設定
 public enum MonsterType
 {
     None,
+    Normal,
     Fire,
     Water,
     Electric,

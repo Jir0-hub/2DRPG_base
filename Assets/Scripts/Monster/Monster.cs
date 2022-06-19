@@ -9,12 +9,32 @@ public class Monster
     // ベースとなるデータ
     MonsterBase _base;
     int level;
+    public int HP { get; set; }
+    // 使える技
+    public List<Move> Moves { get; set; }
 
     // コンストラクター：生成時の初期設定
     public Monster(MonsterBase pBase, int pLevel)
     {
         _base = pBase;
         level = pLevel;
+        HP = pBase.MaxHP;
+
+        // 使える技の設定：覚える技のレベル以上なら、Movesに追加
+        foreach (LearnableMove learnableMove in pBase.LearnableMoves)
+        {
+            if (level >= learnableMove.Level)
+            {
+                //技を覚える：覚える技に設定した技ベースを取得
+                Moves.Add(new Move(learnableMove.Base));
+            }
+
+            // 4つ以上の技は使えない
+            if (Moves.Count >=4)
+            {
+                break;
+            }
+        }
     }
 
     // levelに応じたステータスを返すもの：プロパティ
