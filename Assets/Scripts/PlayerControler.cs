@@ -15,7 +15,9 @@ public class PlayerControler : MonoBehaviour
     Animator animator;
 
     // 壁判定のレイヤー
-    [SerializeField] LayerMask solidObjects;
+    [SerializeField] LayerMask solidObjectsLayer;
+    // 草むら判定のレイヤー
+    [SerializeField] LayerMask longGrassLayer;
 
     private void Awake()
     {
@@ -60,6 +62,8 @@ public class PlayerControler : MonoBehaviour
         animator.SetBool("isMoving", isMoving);
     }
     
+    // Playerの移動
+    // ランダムエンカウント
     IEnumerator Move(Vector3 targetPos)
     {
         // 移動中のフラグを立てる
@@ -81,13 +85,29 @@ public class PlayerControler : MonoBehaviour
 
         // 移動中のフラグをおろす
         isMoving = false;
+        // エンカウント判定
+        CheckForEncounters();
     }
 
     // 目的地の移動可否判定
     bool IsWalkable(Vector2 targetPos)
     {
-        // 目的地に半径0.2fの円のRayをとはして、solidObjectsにぶつかったらtrue
-        return !Physics2D.OverlapCircle(targetPos, 0.2f, solidObjects);
+        // 目的地に半径0.2fの円のRayをとはして、壁レイヤーにぶつかったらtrue
+        return !Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer);
     }
+
+    // 現在地から円のRayをとばして、草むらレイヤーにあたったらランダムエンカウント
+    void CheckForEncounters()
+    {
+        if (Physics2D.OverlapCircle(transform.position, 0.2f, longGrassLayer))
+        {
+            // ランダムエンカウント
+            if (Random.Range(0, 100) < 10)
+            {
+                Debug.Log("モンスターに遭遇");
+            }
+        }
+    }
+
 }
 
