@@ -42,6 +42,12 @@ public class MonsterBase : ScriptableObject
     public int SpDefense { get => spDefense; }
     public int Speed { get => speed; }
     public List<LearnableMove> LearnableMoves { get => learnableMoves;}
+    public string Name { get => name; }
+    public string Description { get => description; }
+    public Sprite FrontSprite { get => frontSprite; }
+    public Sprite BackSprite { get => backSprite; }
+    public MonsterType Type1 { get => type1; }
+    public MonsterType Type2 { get => type2; }
 }
 
 // 覚える技クラス：どのレベルで何を覚えるか
