@@ -9,18 +9,37 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleUnit enemyUnit;
     [SerializeField] BattleHud playerHud;
     [SerializeField] BattleHud enemyHud;
+    [SerializeField] BattleDialogBox dialogBox;
+
+
+    // ・メッセージが出て一秒後にActionSelectorを表示する
+    // ・Zボタンを押すとMoveSelectorとMoveDetailsを表示する
 
     private void Start()
     {
-        SetupBattle();
+        StartCoroutine(SetupBattle());
     }
 
-    void SetupBattle()
+    IEnumerator SetupBattle()
     {
         playerUnit.Setup();
         enemyUnit.Setup();
 
         playerHud.SetData(playerUnit.Monster);
         enemyHud.SetData(enemyUnit.Monster);
+
+        yield return StartCoroutine(dialogBox.TypeDialog($"A wild {enemyUnit.Monster.Base.Name} apeared."));
+        yield return new WaitForSeconds(1);
+        dialogBox.EnableActionSelector(true);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            dialogBox.EnableDialogText(false);
+            dialogBox.EnableActionSelector(false);
+            dialogBox.EnableMoveSelector(true);  
+        }
     }
 }
