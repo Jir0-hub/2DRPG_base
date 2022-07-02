@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132ccb9aa9efb0b43a9673b92d12d6c7, type: 3}
   m_Name: Fushigidane
   m_EditorClassIdentifier: 
-  name: Fushigidane
+  name: "\u30D5\u30B7\u30AE\u30C0\u30CD"
   description: 
   frontSprite: {fileID: 21300000, guid: 28f527266e8c3ea4697d76c5f9f04837, type: 3}
   backSprite: {fileID: 21300000, guid: 5bc75ca5af51fbc4da8fc0852a088933, type: 3}

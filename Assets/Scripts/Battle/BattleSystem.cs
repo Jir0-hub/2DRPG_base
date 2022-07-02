@@ -47,7 +47,7 @@ public class BattleSystem : MonoBehaviour
         // モンスターの技の反映
         dialogBox.SetMoveNames(playerUnit.Monster.Moves);
 
-        yield return StartCoroutine(dialogBox.TypeDialog($"A wild {enemyUnit.Monster.Base.Name} apeared."));
+        yield return StartCoroutine(dialogBox.TypeDialog($"野生の {enemyUnit.Monster.Base.Name} があらわれた."));
         yield return new WaitForSeconds(1);
         PlayerAction();
     }
@@ -56,7 +56,7 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.PlayerAction;
         dialogBox.EnableActionSelector(true);
-        StartCoroutine(dialogBox.TypeDialog("Choose an action"));
+        StartCoroutine(dialogBox.TypeDialog("どうする？"));
     }
 
     void PlayerMove()

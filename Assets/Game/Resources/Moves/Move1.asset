@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a897d4c5cd7eb4ca6cc46b4761b866, type: 3}
   m_Name: Move1
   m_EditorClassIdentifier: 
-  name: Attack1
+  name: "\u3064\u308B\u306E\u3080\u3061"
   description: "\u5F37\u3044\u305E"
   type: 5
   power: 34

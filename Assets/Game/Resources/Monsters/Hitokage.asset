@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132ccb9aa9efb0b43a9673b92d12d6c7, type: 3}
   m_Name: Hitokage
   m_EditorClassIdentifier: 
-  name: Hitokage
+  name: "\u30D2\u30C8\u30AB\u30B2"
   description: 
   frontSprite: {fileID: 21300000, guid: d7dc23450a667624198ad9a99db010dc, type: 3}
   backSprite: {fileID: 21300000, guid: 5bc75ca5af51fbc4da8fc0852a088933, type: 3}
@@ -24,3 +24,4 @@ MonoBehaviour:
   spAttack: 60
   spDefense: 50
   speed: 65
+  learnableMoves: []
