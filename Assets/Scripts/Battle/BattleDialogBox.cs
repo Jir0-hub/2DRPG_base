@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BattleDialogBox : MonoBehaviour
 {
+    [SerializeField] Color highlightColor;
     // dialogのTextを取得して、変更する
     [SerializeField] int letterPerSecond; //1文字当たりの表示速度
     [SerializeField] Text dialogText;
@@ -56,5 +57,23 @@ public class BattleDialogBox : MonoBehaviour
     {
         moveSelector.SetActive(enabled);
         moveDetails.SetActive(enabled);
+    }
+
+    // 選択中のアクションの色を変える
+    public void UpdateActionSelection(int selectAction)
+    {
+        // selectActionが0の時はactionTexts[0]の色を青。それ以外を黒
+        // selectActionが1の時はactionTexts[1]の色を青。それ以外を黒
+        for (int i=0; i<actionTexts.Count; i++)
+        {
+            if (selectAction == i)
+            {
+                actionTexts[i].color = highlightColor;
+            }
+            else
+            {
+                actionTexts[i].color = Color.black;
+            }
+        }
     }
 }
