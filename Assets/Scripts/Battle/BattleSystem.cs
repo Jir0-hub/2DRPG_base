@@ -22,7 +22,7 @@ public class BattleSystem : MonoBehaviour
 
     BattleState state;
     int currentAction; // 0:Fight, 1:Run
-
+    int currentMove; // 0:左上, 1:右上, 3:左下, 4:右下
 
     // ・メッセージが出て一秒後にActionSelectorを表示する
     // ・Zボタンを押すとMoveSelectorとMoveDetailsを表示する
@@ -40,8 +40,12 @@ public class BattleSystem : MonoBehaviour
         playerUnit.Setup();
         enemyUnit.Setup();
 
+        // HUDの描画
         playerHud.SetData(playerUnit.Monster);
         enemyHud.SetData(enemyUnit.Monster);
+
+        // モンスターの技の反映
+        dialogBox.SetMoveNames(playerUnit.Monster.Moves);
 
         yield return StartCoroutine(dialogBox.TypeDialog($"A wild {enemyUnit.Monster.Base.Name} apeared."));
         yield return new WaitForSeconds(1);
@@ -69,6 +73,10 @@ public class BattleSystem : MonoBehaviour
         {
             HandleActionSelection();
         }
+        else if (state == BattleState.PlayerMove)
+        {
+            HandleMoveSelection();
+        }
     }
 
     // PlayerActionでの行動を処理する
@@ -83,7 +91,7 @@ public class BattleSystem : MonoBehaviour
                 currentAction++;
             }
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (currentAction > 0)
             {
@@ -102,5 +110,40 @@ public class BattleSystem : MonoBehaviour
                 PlayerMove();
             }
         }
+    }
+
+        void HandleMoveSelection()
+    {
+        // 0:左上, 1:右上, 3:左下, 4:右下
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (currentMove < playerUnit.Monster.Moves.Count - 1)
+            {
+                currentMove++;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (currentMove > 0)
+            {
+                currentMove--;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (currentMove < playerUnit.Monster.Moves.Count - 2)
+            {
+                currentMove += 2;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (currentMove > 1)
+            {
+                currentMove -= 2;
+            }
+        }
+        // 色をつけて現在の選択Moveを分かるようにする
+        dialogBox.UpdateMoveSelection(currentMove, playerUnit.Monster.Moves[currentMove]);
     }
 }
